@@ -273,6 +273,9 @@ func convertInterfaceToConsulPairs(path string, interfaceMap interface{}) []*pai
 	case map[string]interface{}:
 		for index, item := range interfaceMap.(map[string]interface{}) {
 			nextPairs := convertInterfaceToConsulPairs(pathPre+index, item)
+			if len(nextPairs) == 0 {
+				nextPairs = []*pair{{Key: pathPre+index+"/", Value: ""}}
+			}
 			pairs = append(pairs, nextPairs...)
 		}
 
